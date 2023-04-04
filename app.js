@@ -32,11 +32,11 @@ function checkScore() {
     const allSquares = document.querySelectorAll('.square')
     const winningCombos = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
-        [0, 3, 6], [1, 4, 7], [2, 5, 8],
-        [0, 4, 8], [2, 4, 6]
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
     ]
 
-    console.log(allSquares[4])
+    let filledSquares = 0
 
     winningCombos.forEach(array => {
         const circleWins = array.every(cell =>
@@ -44,16 +44,11 @@ function checkScore() {
 
         if (circleWins) {
             infoDisplay.textContent = "Circle Wins"
-            infoDisplay.style.cssText = '    color: #35ff1a; font-size: 6em;'
+            infoDisplay.style.cssText = 'color: #35ff1a; font-size: 6em;'
             allSquares.forEach(square => square.replaceWith(square.cloneNode(true)))
             return
         }
-    })
 
-
-    console.log(allSquares[4])
-
-    winningCombos.forEach(array => {
         const crossWins = array.every(cell =>
             allSquares[cell].firstChild?.classList.contains('cross'))
 
@@ -64,5 +59,17 @@ function checkScore() {
             return
         }
     })
+
+    allSquares.forEach(square => {
+        if (square.firstChild) {
+            filledSquares++
+        }
+    })
+
+    if (filledSquares === 9) {
+        infoDisplay.textContent = "It's a tie!"
+        infoDisplay.style.cssText = 'color: #ff1a1a; font-size: 6em;'
+        allSquares.forEach(square => square.replaceWith(square.cloneNode(true)))
+    }
 }
 
